@@ -1,35 +1,39 @@
-git <html>
+<html>
+  <head>
+    <link rel="stylesheet" href="index.css" />
+    <link rel="icon" type="image/x-icon" href="logo.ico" />
+  </head>
 
-<head>
-
-    <link rel="stylesheet" href="index.css">
-    <link rel="icon" type="image/x-icon" href="logo.ico">
-
-</head>
-
-<body>
-
+  <body>
     <div id="wrapper">
-        <div id="left-div">
-            <img src="logo.png" id="logo">
-            <hr>
+      <div id="left-div">
+        <img src="logo.png" id="logo" />
+        <hr />
 
-            <div id="score-div">
-                <label> Score: </label>
-                <label id="score"></label>
-            </div>
-            <div id="lines-div">
-                <label> Lines: </label>
-                <label id="lines"></label>
-            </div>
+        <div id="score-div">
+          <label> Score: </label>
+          <label id="score"></label>
         </div>
-        <div id="game-container">
-            <img src="background.png" id="background">
-            <canvas id="game-canvas"></canvas>
+        <div id="lines-div">
+          <label> Lines: </label>
+          <label id="lines"></label>
         </div>
+        <div id="controls-div">
+          <button id="pause-btn">Pause</button>
+          <div id="controls-text">
+            <p> Déplacer : ← →</p>
+            <p> Accélérer : ↓</p>
+            <p> Rotation : Espace</p>
+            <p> Esc : Pause/Reprendre </p>
+          </div>
+        </div>
+      </div>
+      <div id="game-container">
+        <img src="background.png" id="background" />
+        <canvas id="game-canvas"></canvas>
+      </div>
     </div>
-</body>
+  </body>
 
-<script src="index.js"></script>
-
+  <script src="index.js"></script>
 </html>

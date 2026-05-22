@@ -3,6 +3,7 @@ window.onload = () => {
         background = document.getElementById("background"),
         scoreLbl = document.getElementById("score"),
         linesLbl = document.getElementById("lines"),
+        pauseBtn = document.getElementById("pause-btn"),
         canvas = document.getElementById("game-canvas"),
         ctx = canvas.getContext("2d");
 
@@ -109,11 +110,25 @@ window.onload = () => {
     let tetromino = null,
         delay,
         score,
-        lines;
+        lines,
+        paused = false,
+        gameTimer = null;
 
-
+    function togglePause() {
+        paused = !paused;
+        pauseBtn.innerText = paused ? "Reprendre" : "Pause";
+        if (paused) {
+            if (gameTimer !== null) {
+                clearTimeout(gameTimer);
+                gameTimer = null;
+            }
+            return;
+        }
+        draw();
+    }
 
     (function setup() {
+        pauseBtn.onclick = togglePause;
 
         canvas.style.top = Tetromino.BLOCK_SIZE + "px";
         canvas.style.left = Tetromino.BLOCK_SIZE + "px";
@@ -146,6 +161,12 @@ window.onload = () => {
     }
 
     function draw() {
+        if (paused) {
+            scoreLbl.innerText = score;
+            linesLbl.innerText = lines;
+            return;
+        }
+
         if (tetromino) {
 
             // Collision?
@@ -206,11 +227,15 @@ window.onload = () => {
             tetromino.draw();
         }
 
-        setTimeout(draw, delay);
+        gameTimer = setTimeout(draw, delay);
     }
 
     // Move
     window.onkeydown = event => {
+        if (["ArrowLeft", "ArrowRight", "ArrowDown", " ", "Escape"].includes(event.key)) {
+            event.preventDefault();
+        }
+
         switch (event.key) {
             case "ArrowLeft":
                 if (!tetromino.collides(i => ({ x: tetromino.x[i] - 1, y: tetromino.y[i] })))
@@ -225,6 +250,9 @@ window.onload = () => {
                 break;
             case " ":
                 tetromino.rotate();
+                break;
+            case "Escape":
+                togglePause();
                 break;
         }
     }
